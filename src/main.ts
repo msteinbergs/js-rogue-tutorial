@@ -1,4 +1,4 @@
-import * as ROT from 'rot-js';
+import * as ROT from "rot-js";
 
 class Engine {
   public static readonly WIDTH = 80;
@@ -7,22 +7,29 @@ class Engine {
   display: ROT.Display;
 
   constructor() {
-    this.display = new ROT.Display({width: Engine.WIDTH, height: Engine.HEIGHT});
+    this.display = new ROT.Display({
+      width: Engine.WIDTH,
+      height: Engine.HEIGHT,
+    });
+    const container = this.display.getContainer()!;
+    document.body.appendChild(container);
+
+    this.render();
   }
 
   render() {
     const x = Engine.WIDTH / 2;
     const y = Engine.HEIGHT / 2;
-    this.display.draw(x, y, 'Hello World', '#fff', '#000');
+    this.display.draw(x, y, "Hello World", "#fff", "#000");
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  const engine = new Engine();
+declare global {
+  interface Window {
+    engine: Engine;
+  }
+}
 
-  const container = engine.display.getContainer()!;
-
-  document.body.appendChild(container);
-
-  engine.render();
-})
+window.addEventListener("DOMContentLoaded", () => {
+  window.engine = new Engine();
+});
