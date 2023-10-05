@@ -1,4 +1,5 @@
 import * as ROT from "rot-js";
+import { handleInput, MovementAction } from "./input-handler";
 
 class Engine {
   public static readonly WIDTH = 80;
@@ -8,6 +9,17 @@ class Engine {
 
   playerX: number;
   playerY: number;
+
+  update(event: KeyboardEvent) {
+    this.display.clear();
+    const action = handleInput(event);
+
+    if (action instanceof MovementAction) {
+      this.playerX += action.dx;
+      this.playerY += action.dy;
+    }
+    this.render();
+  }
 
   constructor() {
     this.display = new ROT.Display({
@@ -21,6 +33,9 @@ class Engine {
     const container = this.display.getContainer()!;
     document.body.appendChild(container);
 
+    window.addEventListener("keydown", (event) => {
+      this.update(event);
+    });
     this.render();
   }
 
