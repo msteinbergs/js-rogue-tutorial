@@ -38,5 +38,8 @@ export function generateDungeon(
   const room1 = new RectangularRoom(20, 15, 10, 15);
   const room2 = new RectangularRoom(35, 15, 10, 15);
 
+  dungeon.addRoom(room1.x, room1.y, room1.tiles);
+  dungeon.addRoom(room2.x, room2.y, room2.tiles);
+
   return dungeon;
 }
